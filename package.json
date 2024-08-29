@@ -1,0 +1,11 @@
+{
+  "name": "probability-simulator",
+  "version": "1.0.0",
+  "description": "devs hate u",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hardy Valenthio Amansyah",
+  "license": "ISC"
+}
