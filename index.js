@@ -18,9 +18,23 @@ function binomial(n, k) {
   return res;
 }
 
+// todo list: 
 function probArray(p1, n) {
   if (n < 1) return [];
-  if (p1 <= 0 || p1 >= 1) return [];
+  if (p1 < 0 || p1 > 1) return [];
+  
+  if (p1 == 0 || p1 == 1) {
+    let arr = new Array(Number.parseInt(n) + 1).fill(0);
+    switch (p1) {
+      case 0:
+        arr[0] = 1;
+        break;
+      case 1:
+        arr[n] = 1;
+        break;
+    }
+    return arr;
+  }
   
   let p2 = 1 - p1;
   let arr = [];
@@ -56,7 +70,8 @@ function main() {
 
     let outputString = [];
     probMap.forEach((prob, x) => {
-      outputString.push(`<span>${generateBulletString(x, i2)} | ${prob}</span>`) 
+      prob = prob * 100
+      outputString.push(`<span>${generateBulletString(x, i2)} | ${prob.toFixed(3)} %</span>`) 
     })
     outputDOM.innerHTML = outputString.join("<br>")
   }
