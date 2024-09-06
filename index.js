@@ -71,7 +71,11 @@ function main() {
     let outputString = [];
     probMap.forEach((prob, x) => {
       prob = prob * 100
-      outputString.push(`<span>${generateBulletString(x, i2)} | ${prob.toFixed(3)} %</span>`) 
+      // outputString.push(`<span>${generateBulletString(x, i2)} | ${prob.toFixed(3)} %</span>`)
+      if (prob.toFixed(3) >= 0.01) {
+        outputString.push(`<span>${x} / ${i2} | ${prob.toFixed(3)} %</span>`) 
+      }
+      
     })
     outputDOM.innerHTML = outputString.join("<br>")
   }
