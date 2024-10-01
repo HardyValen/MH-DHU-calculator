@@ -1,9 +1,13 @@
 ### BRANCH LOGS
+The branches loosely follows the [semantic versioning](https://semver.org/).
 
-#### Active Branches
-These branches are visibly available and yet to be merged. This includes the main branch and the other branches for developing features.
+#### Main Branches
+The stable branch naming structure consists of the semantic versioning followed by "-stable" suffix. Though, there are some exceptions of the naming rule such as "main".
 * **main**: the latest stable release
-* **v1.0.0**: initial release
+* **v1.0.0-stable**: initial release
+
+#### On Development Branches
+Like the main branch naming structure, the development branches naming structure consists of the semantic versioning followed by "-dev".
 
 #### Past Branches
-These branches have been merged to the active branches.
+These branches have been merged to the active branches or has been deleted.
