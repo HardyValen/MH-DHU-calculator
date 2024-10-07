@@ -58,11 +58,11 @@ function generateBulletString(x, y) {
 function bufferCalcEvent(timeoutID, DOMObjects) {
   return function(e) {
     if (timeoutID) { clearTimeout(timeoutID); }
-    timeoutID = setTimeout(calculateProbability(DOMObjects), 400);
+    timeoutID = setTimeout(printProbabilityTable(DOMObjects), 400);
   }
 }
 
-function calculateProbability({inputProbabilityDOM, occurrenceDOM, outputDOM}) {
+function printProbabilityTable({inputProbabilityDOM, occurrenceDOM, outputDOM}) {
     return function() {
       let i1 = inputProbabilityDOM.value / 100;
       let i2 = occurrenceDOM.value;
@@ -70,15 +70,35 @@ function calculateProbability({inputProbabilityDOM, occurrenceDOM, outputDOM}) {
 
       probMap = probArray(i1, i2);
 
-      let outputString = [];
+      let outputRows = [];
       probMap.forEach((prob, x) => {
         prob = prob * 100
-        if (prob.toFixed(3) >= 0.01) {
-          outputString.push(`<span>${x} / ${i2} | ${prob.toFixed(3)} %</span>`) 
-        }
-        
+        if (prob.toFixed(2) >= 0.01) {
+          outputRows.push(`
+            <tr id="tr_prob_check-${x}">
+              <td>${x} / ${i2}</td>
+              <td>${prob.toFixed(2)} %</td>
+              <td>${(100 - prob).toFixed(2)} %</td>
+              <td><input type="checkbox" id="prob_check-${x}" disabled></input></td>
+            </tr>
+          `) 
+        }        
       })
-      outputDOM.innerHTML = outputString.join("<br>")
+      if (outputRows.length > 0) {
+        outputDOM.innerHTML = `
+          <table id="probability_table">
+            <tr>
+              <th>Trials</th>
+              <th>Success Rate</th>
+              <th>Failure Rate</th>
+              <th>Selection</th>
+            </tr>
+            ${outputRows.join("")}
+          </table>
+        `
+      } else {
+        outputDOM.innerHTML = ``
+      }
     }
 }
 
@@ -92,10 +112,9 @@ function main() {
 
   DOMObjects.inputProbabilityDOM.addEventListener("input", bufferCalcEvent(timeoutID, DOMObjects));
   DOMObjects.occurrenceDOM.addEventListener("input", bufferCalcEvent(timeoutID, DOMObjects));
-  window.addEventListener("keydown", function(e) {
-    if (e.code === "Enter") {
-      if (timeoutID) { clearTimeout(timeoutID) };
-      calculateProbability(DOMObjects)();
-    }
-  })
+
+  // let probCheckDOM = document.querySelector("#tr_prob_check-3");
+  // probCheckDOM.addEventListener("click", (e) => {
+  //   document.querySelector("#prob_check-3").checked = !document.querySelector("#prob_check-3").checked
+  // })
 }
